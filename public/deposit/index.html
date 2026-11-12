@@ -176,6 +176,14 @@
             font-size: 25px;
         }
 
+        .method-icon img {
+            display: block;
+            width: 42px;
+            height: 42px;
+            object-fit: contain;
+            border-radius: 6px;
+        }
+
         .method-name,
         .amount-title {
             color: #fff;
@@ -755,9 +763,11 @@
                     <p class="subtitle">Choose your payment provider to proceed.</p>
 
                     <div class="methods-grid">
-                        <!-- GRAM has been replaced with EcoCash -->
                         <button type="button" class="method-card" onclick="openEcocashModal()">
-                            <span class="method-icon">📱</span>
+                            <span class="method-icon">
+                                <img src="https://techafricanews.com/wp-content/uploads/2026/04/eco-cash.png"
+                                     alt="EcoCash logo">
+                            </span>
                             <span class="method-name">EcoCash</span>
                             <span class="method-sub">Mobile Money</span>
                         </button>
@@ -781,7 +791,10 @@
                         </button>
 
                         <button type="button" class="method-card" onclick="openMpesaModal()">
-                            <span class="method-icon">📲</span>
+                            <span class="method-icon">
+                                <img src="https://akaunting.com/public/assets/media/4-akaunting-inc/m-pesa/m-pesa-logo_1.png"
+                                     alt="M-Pesa logo">
+                            </span>
                             <span class="method-name">M-Pesa</span>
                             <span class="method-sub">Deposit via M-Pesa</span>
                         </button>
