@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CrashGame -- Secure Deposits Gateway</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Outfit:wght@400;600;800;900&amp;display=swap" rel="stylesheet">
+
     <style>
         :root {
             --bg-base: #0b0e14;
@@ -27,72 +26,69 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-family: Arial, sans-serif;
             touch-action: manipulation;
         }
 
         body {
-            background-color: var(--bg-base);
-            color: var(--text-main);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             overflow-x: hidden;
+            color: var(--text-main);
+            background: var(--bg-base);
             -webkit-text-size-adjust: 100%;
         }
 
+        button,
+        input {
+            font: inherit;
+        }
+
         header {
-            background: rgba(19, 25, 36, 0.85);
-            backdrop-filter: blur(24px);
-            border-bottom: 1px solid var(--border-glass);
-            padding: 16px 32px;
+            position: relative;
+            z-index: 10;
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
-            z-index: 10;
+            padding: 16px 32px;
+            background: rgba(19, 25, 36, 0.85);
+            border-bottom: 1px solid var(--border-glass);
+            backdrop-filter: blur(24px);
         }
 
         .back-link {
-            color: var(--accent-cyan);
-            text-decoration: none;
-            font-weight: 800;
-            font-size: 13px;
             position: absolute;
             left: 20px;
+            color: var(--accent-cyan);
+            font-size: 13px;
+            font-weight: 800;
+            text-decoration: none;
         }
 
         .nav-logo {
             display: flex;
             align-items: center;
-            justify-content: center;
             gap: 10px;
-            font-family: 'Outfit', sans-serif;
+            color: #fff;
             font-size: 20px;
             font-weight: 900;
-            color: #fff;
             text-decoration: none;
         }
 
-        .nav-logo img {
-            height: 32px;
-            width: auto;
-            filter: drop-shadow(0 0 8px var(--accent-glow));
-        }
-
         .main-wrapper {
+            position: relative;
             flex: 1;
             width: 100%;
             max-width: 600px;
             margin: 0 auto;
             padding: 24px 16px;
-            position: relative;
         }
 
         .viewport {
+            position: relative;
             width: 100%;
             overflow: hidden;
-            position: relative;
         }
 
         .slider-track {
@@ -108,24 +104,23 @@
         }
 
         h2 {
-            font-family: 'Outfit', sans-serif;
-            font-size: 26px;
-            font-weight: 800;
             margin-bottom: 6px;
             text-align: center;
+            font-size: 26px;
+            font-weight: 800;
         }
 
         p.subtitle {
-            color: var(--text-muted);
-            font-size: 13px;
             margin-bottom: 24px;
+            color: var(--text-muted);
             text-align: center;
+            font-size: 13px;
         }
 
         .methods-grid,
         .amounts-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 12px;
             margin-bottom: 20px;
         }
@@ -136,21 +131,25 @@
 
         .method-card,
         .amount-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-glass);
-            border-radius: 16px;
-            padding: 16px 8px;
-            cursor: pointer;
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
             gap: 8px;
-            transition: all 0.25s ease;
+            padding: 16px 8px;
+            color: #fff;
+            text-align: center;
             text-decoration: none;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.25s ease;
         }
 
         .amount-card {
-            padding: 20px 10px;
+            min-height: 100px;
+            padding: 18px 10px;
             gap: 6px;
         }
 
@@ -161,47 +160,40 @@
             box-shadow: 0 4px 15px var(--accent-glow);
         }
 
+        .method-card:focus-visible,
+        .amount-card:focus-visible,
+        button:focus-visible,
+        a:focus-visible {
+            outline: 2px solid var(--accent-cyan);
+            outline-offset: 3px;
+        }
+
         .method-icon {
-            height: 28px;
             display: flex;
+            min-height: 30px;
             align-items: center;
             justify-content: center;
-        }
-
-        .method-icon img,
-        .method-icon svg {
-            height: 28px;
-            width: 28px;
-            object-fit: contain;
-        }
-
-        .amount-logo {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 1.5px solid var(--accent-cyan);
-            margin-bottom: 4px;
+            font-size: 25px;
         }
 
         .method-name,
         .amount-title {
-            font-size: 12px;
-            font-weight: 800;
             color: #fff;
             text-align: center;
+            font-size: 12px;
+            font-weight: 800;
         }
 
         .amount-title {
-            font-size: 14px;
+            font-size: 16px;
         }
 
         .method-sub,
         .amount-sub {
-            font-size: 10px;
-            font-weight: 600;
             color: var(--text-muted);
             text-align: center;
+            font-size: 10px;
+            font-weight: 600;
         }
 
         .amount-sub {
@@ -209,15 +201,15 @@
         }
 
         .support-banner {
-            background: rgba(19, 25, 36, 0.7);
-            border: 1px solid var(--border-glass);
-            border-radius: 14px;
-            padding: 12px 16px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 12px;
             margin-top: 16px;
+            padding: 12px 16px;
+            background: rgba(19, 25, 36, 0.7);
+            border: 1px solid var(--border-glass);
+            border-radius: 14px;
             backdrop-filter: blur(8px);
         }
 
@@ -228,21 +220,16 @@
         }
 
         .telegram-icon-wrapper {
+            display: flex;
             width: 32px;
             height: 32px;
+            flex-shrink: 0;
+            align-items: center;
+            justify-content: center;
             background: rgba(0, 136, 204, 0.15);
             border: 1px solid rgba(0, 136, 204, 0.4);
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .telegram-icon-wrapper img {
-            width: 16px;
-            height: 16px;
-            object-fit: contain;
+            font-size: 15px;
         }
 
         .support-text-container {
@@ -251,57 +238,56 @@
         }
 
         .support-title {
+            color: #fff;
             font-size: 12px;
             font-weight: 700;
-            color: #fff;
         }
 
         .support-sub {
-            font-size: 10px;
             color: var(--text-muted);
+            font-size: 10px;
             font-weight: 500;
         }
 
         .support-btn {
-            background: #0088cc;
-            color: #ffffff;
-            text-decoration: none;
-            font-size: 11px;
-            font-weight: 800;
-            padding: 8px 12px;
-            border-radius: 8px;
-            white-space: nowrap;
-            transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
             display: flex;
             align-items: center;
             gap: 6px;
+            padding: 8px 12px;
+            color: #fff;
+            background: #0088cc;
+            border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 136, 204, 0.3);
+            font-size: 11px;
+            font-weight: 800;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: 0.2s;
         }
 
         .support-btn:hover {
             background: #0099e6;
             transform: translateY(-1px);
-            box-shadow: 0 0 15px rgba(0, 136, 204, 0.5);
         }
 
         .loading-overlay {
             position: absolute;
+            z-index: 50;
             inset: 0;
-            background: rgba(11, 14, 20, 0.94);
-            backdrop-filter: blur(12px);
             display: none;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            z-index: 50;
             gap: 16px;
+            background: rgba(11, 14, 20, 0.94);
+            backdrop-filter: blur(12px);
         }
 
         .premium-spinner {
             position: relative;
+            display: flex;
             width: 50px;
             height: 50px;
-            display: flex;
             align-items: center;
             justify-content: center;
         }
@@ -313,7 +299,7 @@
             border-top-color: var(--accent-cyan);
             border-right-color: var(--accent-blue);
             border-radius: 50%;
-            animation: spin 0.7s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+            animation: spin 0.7s linear infinite;
         }
 
         .spinner-core {
@@ -325,14 +311,13 @@
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            to { transform: rotate(360deg); }
         }
 
         .loading-text {
+            color: var(--text-main);
             font-size: 12px;
             font-weight: 800;
-            color: var(--text-main);
             letter-spacing: 2px;
             text-transform: uppercase;
             animation: pulseText 1.5s ease-in-out infinite;
@@ -351,10 +336,10 @@
         }
 
         .btn-back-step {
+            padding: 8px 14px;
+            color: var(--accent-cyan);
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid var(--border-glass);
-            color: var(--accent-cyan);
-            padding: 8px 14px;
             border-radius: 10px;
             font-size: 12px;
             font-weight: 700;
@@ -362,22 +347,22 @@
         }
 
         .payment-box {
+            margin-bottom: 20px;
+            padding: 20px;
+            text-align: center;
             background: var(--bg-input);
             border: 1px solid var(--border-glass);
             border-radius: 16px;
-            padding: 20px;
-            text-align: center;
-            margin-bottom: 20px;
         }
 
         .qr-code {
+            display: block;
             width: 150px;
             height: 150px;
             margin: 14px auto;
-            display: block;
-            border-radius: 12px;
-            background: #fff;
             padding: 8px;
+            background: #fff;
+            border-radius: 12px;
         }
 
         .address-container {
@@ -385,30 +370,30 @@
             align-items: center;
             justify-content: space-between;
             gap: 12px;
-            background: var(--bg-card);
+            margin-top: 10px;
             padding: 10px 14px;
+            background: var(--bg-card);
             border-radius: 10px;
             font-size: 12px;
-            margin-top: 10px;
         }
 
         .address-text {
+            color: #a1a1aa;
             font-family: monospace;
             font-size: 11px;
             word-break: break-all;
-            color: #a1a1aa;
         }
 
         .copy-btn {
-            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
-            border: none;
+            flex-shrink: 0;
             padding: 8px 14px;
+            color: #050811;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+            border: 0;
             border-radius: 8px;
+            font-size: 11px;
             font-weight: 800;
             cursor: pointer;
-            color: #050811;
-            font-size: 11px;
-            flex-shrink: 0;
         }
 
         .input-group {
@@ -416,25 +401,26 @@
             text-align: left;
         }
 
-        .input-group label {
+        .input-group label,
+        .form-label {
             display: block;
+            margin-bottom: 8px;
+            color: var(--text-muted);
             font-size: 11px;
             font-weight: 800;
             text-transform: uppercase;
-            color: var(--text-muted);
-            margin-bottom: 8px;
         }
 
         .input-field {
             width: 100%;
             padding: 14px 16px;
+            color: var(--text-main);
             background: var(--bg-input);
             border: 1px solid var(--border-glass);
             border-radius: 12px;
-            color: var(--text-main);
+            outline: none;
             font-size: 14px;
             font-weight: 600;
-            outline: none;
         }
 
         .input-field:focus {
@@ -442,12 +428,12 @@
             box-shadow: 0 0 10px var(--accent-glow);
         }
 
-        .input-note {
+        .input-note,
+        .form-hint {
             display: block;
-            font-size: 11px;
-            color: var(--text-muted);
-            font-weight: 500;
             margin-top: 6px;
+            color: var(--text-muted);
+            font-size: 11px;
             line-height: 1.4;
         }
 
@@ -456,22 +442,21 @@
         }
 
         .validation-error {
+            display: none;
+            margin-top: 6px;
             color: var(--error-red);
             font-size: 11px;
             font-weight: 700;
-            margin-top: 6px;
-            display: none;
         }
 
         .file-upload-wrapper {
             position: relative;
+            padding: 16px;
+            text-align: center;
             background: var(--bg-input);
             border: 2px dashed var(--border-glass);
             border-radius: 12px;
-            padding: 16px;
-            text-align: center;
             cursor: pointer;
-            transition: border-color 0.2s;
         }
 
         .file-upload-wrapper:hover {
@@ -481,36 +466,42 @@
         .file-upload-input {
             position: absolute;
             inset: 0;
-            opacity: 0;
-            cursor: pointer;
             width: 100%;
             height: 100%;
+            opacity: 0;
+            cursor: pointer;
         }
 
-        .btn-submit {
+        .btn-submit,
+        #payBtn {
             width: 100%;
+            margin-top: 8px;
             padding: 16px;
-            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
             color: #050811;
-            border: none;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+            border: 0;
             border-radius: 12px;
+            box-shadow: 0 4px 20px var(--accent-glow);
             font-size: 14px;
             font-weight: 800;
             cursor: pointer;
-            box-shadow: 0 4px 20px var(--accent-glow);
-            margin-top: 8px;
+        }
+
+        #payBtn:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
         }
 
         .modal-overlay {
             position: fixed;
+            z-index: 1000;
             inset: 0;
-            background: rgba(7, 10, 15, 0.85);
-            backdrop-filter: blur(12px);
             display: none;
             align-items: center;
             justify-content: center;
-            z-index: 1000;
             padding: 16px;
+            background: rgba(7, 10, 15, 0.85);
+            backdrop-filter: blur(12px);
         }
 
         .modal-overlay.open {
@@ -520,32 +511,25 @@
 
         .modal-content,
         .modal-card {
+            width: 100%;
+            max-width: 440px;
+            max-height: 90vh;
+            padding: 24px;
+            overflow-y: auto;
+            text-align: center;
             background: var(--bg-surface);
             border: 1px solid var(--border-glass);
             border-radius: 20px;
-            padding: 24px;
-            width: 100%;
-            max-width: 440px;
-            text-align: center;
-            max-height: 90vh;
-            overflow-y: auto;
         }
 
         .modal-card {
             max-width: 400px;
             text-align: left;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
-            animation: slideUp 0.25s ease;
         }
 
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
-        }
-
-        @keyframes slideUp {
-            from { transform: translateY(24px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
         }
 
         .modal-header {
@@ -556,110 +540,78 @@
         }
 
         .modal-title {
-            font-family: 'Outfit', sans-serif;
             font-size: 18px;
             font-weight: 800;
         }
 
         .modal-close {
+            display: flex;
             width: 32px;
             height: 32px;
-            border-radius: 50%;
-            border: 1px solid var(--border-glass);
-            background: var(--bg-card);
-            color: var(--text-muted);
-            font-size: 16px;
-            cursor: pointer;
-            display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.2s;
-        }
-
-        .modal-close:hover {
-            color: #fff;
-            border-color: var(--accent-cyan);
+            color: var(--text-muted);
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
         }
 
         .network-btn {
             width: 100%;
+            margin-bottom: 10px;
+            padding: 14px;
+            color: var(--text-main);
             background: var(--bg-card);
             border: 1px solid var(--border-glass);
-            color: var(--text-main);
-            padding: 14px;
             border-radius: 12px;
             font-weight: 700;
-            margin-bottom: 10px;
             cursor: pointer;
-            transition: background 0.2s;
         }
 
         .network-btn:hover {
-            background: rgba(0, 242, 254, 0.1);
             border-color: var(--accent-cyan);
-        }
-
-        .form-label {
-            display: block;
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            text-align: left;
+            background: rgba(0, 242, 254, 0.1);
         }
 
         .phone-input-wrapper {
             display: flex;
             align-items: center;
+            overflow: hidden;
             background: var(--bg-input);
             border: 1px solid var(--border-glass);
             border-radius: 12px;
-            overflow: hidden;
-            transition: border-color 0.2s;
-        }
-
-        .phone-input-wrapper:focus-within {
-            border-color: var(--border-active);
         }
 
         .phone-prefix {
             padding: 14px 12px;
-            font-weight: 800;
-            font-size: 14px;
             color: var(--accent-cyan);
             border-right: 1px solid var(--border-glass);
+            font-size: 14px;
+            font-weight: 800;
         }
 
         #phoneInput {
             flex: 1;
-            background: transparent;
-            border: none;
-            outline: none;
-            color: var(--text-main);
-            font-size: 15px;
-            font-weight: 600;
+            min-width: 0;
             padding: 14px 12px;
+            color: var(--text-main);
+            background: transparent;
+            border: 0;
+            outline: none;
+            font-size: 15px;
             letter-spacing: 1px;
         }
 
         #phoneInput::placeholder {
             color: #4a5568;
-            font-weight: 500;
-            letter-spacing: 0;
-        }
-
-        .form-hint {
-            font-size: 11px;
-            color: var(--text-muted);
-            margin-top: 8px;
         }
 
         .selected-amount-display {
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
             margin: 16px 0;
             padding: 12px 14px;
             background: var(--bg-input);
@@ -673,34 +625,9 @@
         }
 
         .selected-amount-display .value {
-            font-weight: 800;
             color: var(--accent-cyan);
             font-size: 15px;
-        }
-
-        #payBtn {
-            width: 100%;
-            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
-            border: none;
-            border-radius: 12px;
-            padding: 16px;
-            font-size: 15px;
             font-weight: 800;
-            color: #06121a;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
-            box-shadow: 0 4px 20px var(--accent-glow);
-        }
-
-        #payBtn:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 25px var(--accent-glow);
-        }
-
-        #payBtn:disabled {
-            opacity: 0.55;
-            cursor: not-allowed;
-            transform: none;
         }
 
         .status-box {
@@ -718,100 +645,100 @@
         }
 
         .status-box.loading {
+            color: var(--accent-cyan);
             background: rgba(0, 242, 254, 0.08);
             border: 1px solid var(--border-active);
-            color: var(--accent-cyan);
         }
 
         .status-box.success {
+            color: var(--accent-green);
             background: rgba(16, 185, 129, 0.1);
             border: 1px solid rgba(16, 185, 129, 0.5);
-            color: var(--accent-green);
         }
 
         .status-box.error {
+            color: var(--error-red);
             background: rgba(239, 68, 68, 0.1);
             border: 1px solid rgba(239, 68, 68, 0.5);
-            color: var(--error-red);
         }
 
         .method-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 10px;
+            padding: 10px 14px;
             background: var(--bg-card);
             border: 1px solid var(--border-glass);
-            padding: 10px 14px;
             border-radius: 12px;
-            margin-bottom: 10px;
-            transition: border-color 0.2s;
-        }
-
-        .method-row:hover {
-            border-color: rgba(0, 242, 254, 0.3);
         }
 
         .method-row-info {
             display: flex;
+            min-width: 0;
             align-items: center;
             gap: 12px;
+            color: #fff;
             font-size: 13px;
             font-weight: 700;
-            color: #fff;
         }
 
         .method-logo-wrapper {
+            display: flex;
             width: 32px;
             height: 32px;
-            border-radius: 50%;
-            border: 1.5px solid var(--accent-cyan);
-            box-shadow: 0 0 10px rgba(0, 242, 254, 0.4);
-            background-color: var(--bg-base);
-            display: flex;
+            flex-shrink: 0;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
-            flex-shrink: 0;
-        }
-
-        .method-logo-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            background: var(--bg-base);
+            border: 1.5px solid var(--accent-cyan);
             border-radius: 50%;
+            font-size: 16px;
         }
 
         .buy-now-btn {
-            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+            flex-shrink: 0;
+            padding: 7px 12px;
             color: #050811;
-            text-decoration: none;
-            font-size: 11px;
-            font-weight: 800;
-            padding: 6px 14px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
             border-radius: 6px;
             box-shadow: 0 0 8px var(--accent-glow);
-            transition: transform 0.2s, background 0.2s;
+            font-size: 11px;
+            font-weight: 800;
+            text-decoration: none;
             white-space: nowrap;
-            flex-shrink: 0;
         }
 
-        .buy-now-btn:hover {
-            transform: scale(1.05);
-            filter: brightness(1.1);
+        @media (max-width: 380px) {
+            .methods-grid,
+            .amounts-grid {
+                gap: 8px;
+            }
+
+            .method-card {
+                padding: 13px 5px;
+            }
+
+            .support-banner {
+                padding: 10px;
+            }
+
+            .modal-content,
+            .modal-card {
+                padding: 18px;
+            }
         }
     </style>
 </head>
 
 <body>
-
     <header>
         <a href="/dashboard/index.html" class="back-link">&larr; Back</a>
-        <a href="/dashboard/index.html" class="nav-logo">
-            <img src="/i.ibb.co/5WS8kMsY/4-F05-AFF4-AFC8-4-B60-9-F59-086-D08-FA8723.png" alt="BetRush" /> CrashGame
-        </a>
+        <a href="/dashboard/index.html" class="nav-logo">🎰 CrashGame</a>
     </header>
 
-    <div class="main-wrapper">
+    <main class="main-wrapper">
         <div id="loadingOverlay" class="loading-overlay">
             <div class="premium-spinner">
                 <div class="spinner-ring"></div>
@@ -822,85 +749,84 @@
 
         <div class="viewport">
             <div class="slider-track" id="sliderTrack">
-                <div class="step-panel">
+                <!-- STEP 1: Choose payment method -->
+                <section class="step-panel">
                     <h2>Deposit Gateway</h2>
                     <p class="subtitle">Choose your payment provider to proceed.</p>
 
                     <div class="methods-grid">
-                        <div class="method-card" onclick="selectMethod('gram')">
-                            <div class="method-icon"><img src="../../cdn-icons-png.flaticon.com/128/15301/15301814.png" alt="GRAM" /></div>
-                            <div class="method-name">GRAM</div>
-                            <div class="method-sub">TON Network</div>
-                        </div>
+                        <!-- GRAM has been replaced with EcoCash -->
+                        <button type="button" class="method-card" onclick="openEcocashModal()">
+                            <span class="method-icon">📱</span>
+                            <span class="method-name">EcoCash</span>
+                            <span class="method-sub">Mobile Money</span>
+                        </button>
 
-                        <div class="method-card" onclick="selectMethod('ott')">
-                            <div class="method-icon"><img src="../../i.ibb.co/HLbQY3Zw/9-B9-A192-B-F051-45-BA-B5-B0-2994-EA7-B7-EF2.png" alt="OTT Voucher" /></div>
-                            <div class="method-name">OTT Voucher</div>
-                            <div class="method-sub">Prepaid</div>
-                        </div>
+                        <button type="button" class="method-card" onclick="selectMethod('ott')">
+                            <span class="method-icon">🎟️</span>
+                            <span class="method-name">OTT Voucher</span>
+                            <span class="method-sub">Prepaid</span>
+                        </button>
 
-                        <div class="method-card" onclick="selectMethod('bitcoin')">
-                            <div class="method-icon"><img src="../../cdn-icons-png.flaticon.com/128/15301/15301521.png" alt="Bitcoin" /></div>
-                            <div class="method-name">Bitcoin</div>
-                            <div class="method-sub">BTC Chain</div>
-                        </div>
+                        <button type="button" class="method-card" onclick="selectMethod('bitcoin')">
+                            <span class="method-icon">₿</span>
+                            <span class="method-name">Bitcoin</span>
+                            <span class="method-sub">BTC Chain</span>
+                        </button>
 
-                        <div class="method-card" onclick="openUsdtModal()">
-                            <div class="method-icon"><img src="../../cdn-icons-png.flaticon.com/128/15301/15301795.png" alt="USDT" /></div>
-                            <div class="method-name">USDT</div>
-                            <div class="method-sub">TRC20 / BEP20</div>
-                        </div>
+                        <button type="button" class="method-card" onclick="openUsdtModal()">
+                            <span class="method-icon">₮</span>
+                            <span class="method-name">USDT</span>
+                            <span class="method-sub">TRC20 / BEP20</span>
+                        </button>
 
-                        <div class="method-card" onclick="openMpesaModal()">
-                            <div class="method-icon"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSK9btJTu-287FCOeK5xFZVt1cnFQnnBpQhG6pPrIry4Q&s=10" alt="M-Pesa" /></div>
-                            <div class="method-name">M-Pesa</div>
-                            <div class="method-sub">Deposit via M-Pesa</div>
-                        </div>
+                        <button type="button" class="method-card" onclick="openMpesaModal()">
+                            <span class="method-icon">📲</span>
+                            <span class="method-name">M-Pesa</span>
+                            <span class="method-sub">Deposit via M-Pesa</span>
+                        </button>
 
-                        <div class="method-card" onclick="openOthersModal()">
-                            <div class="method-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <rect x="3" y="3" width="7" height="7" rx="1.5"></rect>
-                                    <rect x="14" y="3" width="7" height="7" rx="1.5"></rect>
-                                    <rect x="14" y="14" width="7" height="7" rx="1.5"></rect>
-                                    <rect x="3" y="14" width="7" height="7" rx="1.5"></rect>
-                                </svg>
-                            </div>
-                            <div class="method-name">Others</div>
-                            <div class="method-sub">See More</div>
-                        </div>
+                        <button type="button" class="method-card" onclick="openOthersModal()">
+                            <span class="method-icon">▦</span>
+                            <span class="method-name">Others</span>
+                            <span class="method-sub">See More</span>
+                        </button>
                     </div>
 
-                    <!-- SUPPORT BANNER STEP 1 -->
                     <div class="support-banner">
                         <div class="support-info">
-                            <div class="telegram-icon-wrapper">
-                                <img src="../../cdn-icons-png.flaticon.com/128/2111/2111646.png" alt="Telegram" />
-                            </div>
+                            <div class="telegram-icon-wrapper">✈</div>
                             <div class="support-text-container">
                                 <span class="support-title">Can't find your method?</span>
                                 <span class="support-sub">👨‍💻 Contact Customer Support</span>
                             </div>
                         </div>
-                        <a href="https://t.me/crashgamesHelp" target="_blank" class="support-btn">
+                        <a href="https://t.me/crashgamesHelp" target="_blank" rel="noopener noreferrer" class="support-btn">
                             Contact
                         </a>
                     </div>
-                </div>
+                </section>
 
-                <div class="step-panel">
+                <!-- STEP 2: Existing wallet/voucher deposit details -->
+                <section class="step-panel">
                     <div class="step-header">
-                        <button class="btn-back-step" onclick="goToStep(1)">&larr; Change Method</button>
-                        <span id="stepTitle" style="font-weight:800; font-size: 13px; color: var(--accent-cyan);">DETAILS</span>
+                        <button type="button" class="btn-back-step" onclick="goToStep(1)">
+                            &larr; Change Method
+                        </button>
+                        <span id="stepTitle" style="font-weight:800;font-size:13px;color:var(--accent-cyan);">
+                            DETAILS
+                        </span>
                     </div>
 
                     <form id="depositForm">
                         <div class="payment-box" id="paymentBox">
-                            <p id="instructionText" style="font-size: 12px; font-weight: 700; color: #fff;"></p>
+                            <p id="instructionText" style="font-size:12px;font-weight:700;color:#fff;"></p>
                             <img id="qrImage" class="qr-code" src="#" alt="QR Code" style="display:none;">
                             <div id="addressWrapper" class="address-container" style="display:none;">
                                 <span id="addressText" class="address-text"></span>
-                                <button type="button" class="copy-btn" onclick="copyAddress()">Copy</button>
+                                <button type="button" class="copy-btn" id="copyAddressButton" onclick="copyAddress()">
+                                    Copy
+                                </button>
                             </div>
                         </div>
 
@@ -911,68 +837,91 @@
                         </div>
 
                         <div class="input-group" id="voucherGroup" style="display:none;">
-                            <label id="voucherLabel" for="voucherCode">Voucher PIN Code(s)</label>
+                            <label for="voucherCode">Voucher PIN Code(s)</label>
                             <input type="text" id="voucherCode" class="input-field" placeholder="Enter PIN code(s)">
 
-                            <label for="voucherAmount" style="margin-top: 12px;">Total Voucher Value (ZAR)</label>
+                            <label for="voucherAmount" style="margin-top:12px;">Total Voucher Value (ZAR)</label>
                             <input type="number" id="voucherAmount" class="input-field" placeholder="Minimum R200 total value" step="any">
                             <span class="validation-error" id="voucherAmountError"></span>
 
                             <span class="input-note">
-                                <strong>Note:</strong> Minimum total deposit for vouchers is <strong>R200 ZAR</strong>. Combine multiple voucher values and separate PIN codes with commas (e.g., 123456789, 987654321).
+                                <strong>Note:</strong> Minimum total deposit for vouchers is
+                                <strong>R200 ZAR</strong>. Combine multiple voucher values and separate PIN
+                                codes with commas (e.g., 123456789, 987654321).
                             </span>
-
                         </div>
 
                         <div class="input-group" id="proofGroup">
                             <label>Payment Proof</label>
                             <div class="file-upload-wrapper">
-                                <span id="fileNameDisplay" style="font-size:12px; color: var(--text-muted); font-weight: 600;">Choose image or screenshot...</span>
-                                <input type="file" id="proofFile" class="file-upload-input" accept="image/*,.pdf" onchange="handleFileSelect(this)">
+                                <span id="fileNameDisplay" style="font-size:12px;color:var(--text-muted);font-weight:600;">
+                                    Choose image or screenshot...
+                                </span>
+                                <input type="file" id="proofFile" class="file-upload-input"
+                                       accept="image/*,.pdf" onchange="handleFileSelect(this)">
                             </div>
                         </div>
 
                         <button type="submit" id="submitBtn" class="btn-submit">CONFIRM DEPOSIT</button>
                     </form>
 
-                    <!-- SUPPORT BANNER STEP 2 -->
                     <div class="support-banner">
                         <div class="support-info">
-                            <div class="telegram-icon-wrapper">
-                                <img src="../../cdn-icons-png.flaticon.com/128/2111/2111646.png" alt="Telegram" />
-                            </div>
+                            <div class="telegram-icon-wrapper">✈</div>
                             <div class="support-text-container">
                                 <span class="support-title">Need help with your payment?</span>
                                 <span class="support-sub">Contact Customer Support instantly</span>
                             </div>
                         </div>
-                        <a href="https://t.me/crashgamesHelp" target="_blank" class="support-btn">
+                        <a href="https://t.me/crashgamesHelp" target="_blank" rel="noopener noreferrer" class="support-btn">
                             Support
                         </a>
                     </div>
-                </div>
+                </section>
             </div>
+        </div>
+    </main>
+
+    <!-- ECOCASH AMOUNT MODAL -->
+    <div class="modal-overlay" id="ecocashModalOverlay">
+        <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="ecocashModalTitle">
+            <div class="modal-header">
+                <h3 class="modal-title" id="ecocashModalTitle">EcoCash Deposit</h3>
+                <button type="button" class="modal-close" id="ecocashModalClose" aria-label="Close">
+                    &times;
+                </button>
+            </div>
+
+            <p class="subtitle" style="margin-bottom:16px;">
+                Select the amount you would like to deposit.
+            </p>
+
+            <div class="amounts-grid" id="ecocashAmountsGrid"></div>
         </div>
     </div>
 
     <!-- USDT NETWORK MODAL -->
     <div id="usdtNetworkModal" class="modal-overlay">
-        <div class="modal-content">
-            <h3 style="margin-bottom:16px; font-size:18px;">Select USDT Network</h3>
-            <button type="button" class="network-btn" onclick="selectUsdtNetwork('usdt_trc20')">TRC20 (Tron)</button>
-            <button type="button" class="network-btn" onclick="selectUsdtNetwork('usdt_bep20')">BEP20 (Binance Smart Chain)</button>
-            <button type="button" class="btn-back-step" style="width:100%; margin-top:8px;" onclick="closeUsdtModal()">Cancel</button>
+        <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="usdtModalTitle">
+            <h3 id="usdtModalTitle" style="margin-bottom:16px;font-size:18px;">Select USDT Network</h3>
+            <button type="button" class="network-btn" onclick="selectUsdtNetwork('usdt_trc20')">
+                TRC20 (Tron)
+            </button>
+            <button type="button" class="network-btn" onclick="selectUsdtNetwork('usdt_bep20')">
+                BEP20 (Binance Smart Chain)
+            </button>
+            <button type="button" class="btn-back-step" style="width:100%;margin-top:8px;" onclick="closeUsdtModal()">
+                Cancel
+            </button>
 
-            <div class="support-banner" style="margin-top: 14px; text-align: left;">
+            <div class="support-banner" style="margin-top:14px;text-align:left;">
                 <div class="support-info">
-                    <div class="telegram-icon-wrapper">
-                        <img src="../../cdn-icons-png.flaticon.com/128/2111/2111646.png" alt="Telegram" />
-                    </div>
+                    <div class="telegram-icon-wrapper">✈</div>
                     <div class="support-text-container">
                         <span class="support-title">Need custom USDT networks?</span>
                     </div>
                 </div>
-                <a href="https://t.me/crashgamesHelp" target="_blank" class="support-btn">
+                <a href="https://t.me/crashgamesHelp" target="_blank" rel="noopener noreferrer" class="support-btn">
                     Support
                 </a>
             </div>
@@ -981,23 +930,24 @@
 
     <!-- M-PESA DEPOSIT MODAL -->
     <div class="modal-overlay" id="mpesaModalOverlay">
-        <div class="modal-card">
+        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="mpesaTitle">
             <div class="modal-header">
-                <span class="modal-title">M-Pesa Deposit</span>
-                <button class="modal-close" id="mpesaModalClose" aria-label="Close">&times;</button>
+                <span class="modal-title" id="mpesaTitle">M-Pesa Deposit</span>
+                <button type="button" class="modal-close" id="mpesaModalClose" aria-label="Close">
+                    &times;
+                </button>
             </div>
 
-            <h2 style="font-size:20px; margin-bottom:4px;">Select Amount</h2>
+            <h2 style="font-size:20px;margin-bottom:4px;">Select Amount</h2>
             <p class="subtitle" style="margin-bottom:16px;">Tap an amount to deposit instantly via M-Pesa.</p>
 
-            <div class="amounts-grid" id="amountsGrid">
-                <!-- Amount cards rendered by JS -->
-            </div>
+            <div class="amounts-grid" id="amountsGrid"></div>
 
             <label class="form-label" for="phoneInput">M-Pesa Phone Number</label>
             <div class="phone-input-wrapper">
                 <span class="phone-prefix">+254</span>
-                <input type="tel" id="phoneInput" inputmode="numeric" maxlength="10" placeholder="712345678" autocomplete="tel">
+                <input type="tel" id="phoneInput" inputmode="numeric" maxlength="10"
+                       placeholder="712345678" autocomplete="tel">
             </div>
             <p class="form-hint">Enter your Safaricom number, e.g. 712345678 or 0112345678.</p>
 
@@ -1006,21 +956,18 @@
                 <span class="value" id="selectedAmount">--</span>
             </div>
 
-            <button id="payBtn" disabled>Deposit Now</button>
-
-            <div class="status-box" id="statusBox"></div>
+            <button type="button" id="payBtn" disabled>Deposit Now</button>
+            <div class="status-box" id="statusBox" aria-live="polite"></div>
 
             <div class="support-banner" style="margin-top:14px;">
                 <div class="support-info">
-                    <div class="telegram-icon-wrapper">
-                        <img src="../../cdn-icons-png.flaticon.com/128/2111/2111646.png" alt="Telegram" />
-                    </div>
+                    <div class="telegram-icon-wrapper">✈</div>
                     <div class="support-text-container">
                         <span class="support-title">Need help with M-Pesa?</span>
                         <span class="support-sub">Contact Customer Support instantly</span>
                     </div>
                 </div>
-                <a href="https://t.me/crashgamesHelp" target="_blank" class="support-btn">
+                <a href="https://t.me/crashgamesHelp" target="_blank" rel="noopener noreferrer" class="support-btn">
                     Support
                 </a>
             </div>
@@ -1029,205 +976,23 @@
 
     <!-- OTHERS / SEE MORE PAYMENT OPTIONS MODAL -->
     <div id="othersModal" class="modal-overlay">
-        <div class="modal-content">
-            <h3 style="margin-bottom: 8px; font-size: 18px;">More Payment Methods</h3>
-            <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 16px;">Select your preferred payment method to deposit directly.</p>
+        <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="othersTitle">
+            <h3 id="othersTitle" style="margin-bottom:8px;font-size:18px;">More Payment Methods</h3>
+            <p style="font-size:11px;color:var(--text-muted);margin-bottom:16px;">
+                Select your preferred payment method to deposit directly.
+            </p>
 
-            <div class="method-row">
-                <div class="method-row-info">
-                    <div class="method-logo-wrapper">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9iKNz98p01qVsjgNF7WwPvtfBVRa6-DWDcjWnbrnBlg&s" alt="Opay" />
-                    </div>
-                    <span>Opay</span>
-                </div>
-                <a href="https://t.me/crashgamesHelp?text=Greetings%20%F0%9F%91%8B%20I%20would%20like%20to%20deposit%20on%20my%20CrashGame%20%F0%9F%8E%B0%20using%20Opay%20%F0%9F%92%B3" target="_blank" class="buy-now-btn">DEPOSIT NOW</a>
-            </div>
+            <div id="otherMethodsList"></div>
 
-            <div class="method-row">
-                <div class="method-row-info">
-                    <div class="method-logo-wrapper">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQkK0XVNop4QlTKK5Q-97DhC16ch0orPxF25oql_4szw&s=10" alt="Wave" />
-                    </div>
-                    <span>Wave</span>
-                </div>
-                <a href="https://t.me/crashgamesHelp?text=Greetings%20%F0%9F%91%8B%20I%20would%20like%20to%20deposit%20on%20my%20CrashGame%20%F0%9F%8E%B0%20using%20Wave%20%F0%9F%92%B3" target="_blank" class="buy-now-btn">DEPOSIT NOW</a>
-            </div>
-
-            <div class="method-row">
-                <div class="method-row-info">
-                    <div class="method-logo-wrapper">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRN3ejbu9hJ4Y3WgUmT0tS4JgWT2nV2pl8J27OR4WUoJg&s" alt="Airtm" />
-                    </div>
-                    <span>Airtm</span>
-                </div>
-                <a href="https://t.me/crashgamesHelp?text=Greetings%20%F0%9F%91%8B%20I%20would%20like%20to%20deposit%20on%20my%20CrashGame%20%F0%9F%8E%B0%20using%20Airtm%20%F0%9F%92%B3" target="_blank" class="buy-now-btn">DEPOSIT NOW</a>
-            </div>
-
-            <div class="method-row">
-                <div class="method-row-info">
-                    <div class="method-logo-wrapper">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYcpJSYnIuAwCG73ZozZI0z6lVtGkKSQhOxdqhECVT9w&s=10" alt="Bkash" />
-                    </div>
-                    <span>Bkash</span>
-                </div>
-                <a href="https://t.me/crashgamesHelp?text=Greetings%20%F0%9F%91%8B%20I%20would%20like%20to%20deposit%20on%20my%20CrashGame%20%F0%9F%8E%B0%20using%20Bkash%20%F0%9F%92%B3" target="_blank" class="buy-now-btn">DEPOSIT NOW</a>
-            </div>
-
-            <div class="method-row">
-                <div class="method-row-info">
-                    <div class="method-logo-wrapper">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoiMTkwuGfNe9iqJc7d0uSwQ-Py8aWZekfO4JM6oQX2g&s" alt="Gcash" />
-                    </div>
-                    <span>Gcash</span>
-                </div>
-                <a href="https://t.me/crashgamesHelp?text=Greetings%20%F0%9F%91%8B%20I%20would%20like%20to%20deposit%20on%20my%20CrashGame%20%F0%9F%8E%B0%20using%20Gcash%20%F0%9F%92%B3" target="_blank" class="buy-now-btn">DEPOSIT NOW</a>
-            </div>
-
-            <div class="method-row">
-                <div class="method-row-info">
-                    <div class="method-logo-wrapper">
-                        <img src="https://i.ibb.co/rnRx0Xp/F7232-FEE-8106-4-B47-A90-C-C877232-BD499.png" alt="Mpesa" />
-                    </div>
-                    <span>Mpesa</span>
-                </div>
-                <a href="https://t.me/crashgamesHelp?text=Greetings%20%F0%9F%91%8B%20I%20would%20like%20to%20deposit%20on%20my%20CrashGame%20%F0%9F%8E%B0%20using%20Mpesa%20%F0%9F%92%B3" target="_blank" class="buy-now-btn">DEPOSIT NOW</a>
-            </div>
-
-            <div class="method-row">
-                <div class="method-row-info">
-                    <div class="method-logo-wrapper">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyK3ez-cqTbGTCanvE0eVOSkpXvHoLhlEbvvw5qIzOiQ&s=10" alt="Nagad" />
-                    </div>
-                    <span>Nagad</span>
-                </div>
-                <a href="https://t.me/crashgamesHelp?text=Greetings%20%F0%9F%91%8B%20I%20would%20like%20to%20deposit%20on%20my%20CrashGame%20%F0%9F%8E%B0%20using%20Nagad%20%F0%9F%92%B3" target="_blank" class="buy-now-btn">DEPOSIT NOW</a>
-            </div>
-
-            <div class="method-row">
-                <div class="method-row-info">
-                    <div class="method-logo-wrapper">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1XLJvC8u6VFH5U_qoFnxYTmR0tXMVzRgHic3HFkjIyg&s" alt="Paytm" />
-                    </div>
-                    <span>Paytm</span>
-                </div>
-                <a href="https://t.me/crashgamesHelp?text=Greetings%20%F0%9F%91%8B%20I%20would%20like%20to%20deposit%20on%20my%20CrashGame%20%F0%9F%8E%B0%20using%20Paytm%20%F0%9F%92%B3" target="_blank" class="buy-now-btn">DEPOSIT NOW</a>
-            </div>
-
-            <div class="method-row">
-                <div class="method-row-info">
-                    <div class="method-logo-wrapper">
-                        <img src="https://cdn.iconscout.com/icon/free/png-256/free-skrill-icon-svg-download-png-789423.png" alt="Skrill" />
-                    </div>
-                    <span>Skrill</span>
-                </div>
-                <a href="https://t.me/crashgamesHelp?text=Greetings%20%F0%9F%91%8B%20I%20would%20like%20to%20deposit%20on%20my%20CrashGame%20%F0%9F%8E%B0%20using%20Skrill%20%F0%9F%92%B3" target="_blank" class="buy-now-btn">DEPOSIT NOW</a>
-            </div>
-
-            <div class="method-row">
-                <div class="method-row-info">
-                    <div class="method-logo-wrapper">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ86KerXfaeiE80v3LS0nAxpHxV5nKIhZnBxGIhVVE0_Q&s=10" alt="PhonePe" />
-                    </div>
-                    <span>PhonePe</span>
-                </div>
-                <a href="https://t.me/crashgamesHelp?text=Greetings%20%F0%9F%91%8B%20I%20would%20like%20to%20deposit%20on%20my%20CrashGame%20%F0%9F%8E%B0%20using%20PhonePe%20%F0%9F%92%B3" target="_blank" class="buy-now-btn">DEPOSIT NOW</a>
-            </div>
-
-            <div class="method-row">
-                <div class="method-row-info">
-                    <div class="method-logo-wrapper">
-                        <img src="https://play-lh.googleusercontent.com/gxLZ7ouLFPXZQWvvUDvGtDyFeGjcGLgoR4xRvWC98QuMkhe-OOKiAT6f1oL3PwjM_jDKghVedUM-skYGWowJCio=w240-h480-rw" alt="JazzCash" />
-                    </div>
-                    <span>JazzCash</span>
-                </div>
-                <a href="https://t.me/crashgamesHelp?text=Greetings%20%F0%9F%91%8B%20I%20would%20like%20to%20deposit%20on%20my%20CrashGame%20%F0%9F%8E%B0%20using%20JazzCash%20%F0%9F%92%B3" target="_blank" class="buy-now-btn">DEPOSIT NOW</a>
-            </div>
-
-            <div class="method-row">
-                <div class="method-row-info">
-                    <div class="method-logo-wrapper">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRI6RQ1rolOyKr-mVFK5lc9VeasL5RGilALk2FldOIkZMVItOVGo9GjgMrQ&s=10" alt="Redotpay" />
-                    </div>
-                    <span>Redotpay</span>
-                </div>
-                <a href="https://t.me/crashgamesHelp?text=Greetings%20%F0%9F%91%8B%20I%20would%20like%20to%20deposit%20on%20my%20CrashGame%20%F0%9F%8E%B0%20using%20Redotpay%20%F0%9F%92%B3" target="_blank" class="buy-now-btn">DEPOSIT NOW</a>
-            </div>
-
-            <div class="method-row">
-                <div class="method-row-info">
-                    <div class="method-logo-wrapper">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqCn05xFC_INR4orMgOv_n168h1fxJTbP0tVSTUOjRZowlFKrI3dowjI8S&s=10" alt="Telebirr" />
-                    </div>
-                    <span>Telebirr</span>
-                </div>
-                <a href="https://t.me/crashgamesHelp?text=Greetings%20%F0%9F%91%8B%20I%20would%20like%20to%20deposit%20on%20my%20CrashGame%20%F0%9F%8E%B0%20using%20Telebirr%20%F0%9F%92%B3" target="_blank" class="buy-now-btn">DEPOSIT NOW</a>
-            </div>
-
-            <div class="method-row">
-                <div class="method-row-info">
-                    <div class="method-logo-wrapper">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIg5dSp3uWNYzA2rZ0VOoQCCq-QOcEs6kJOWb0tD3hR2Hd9jm0kJ9OQXSa&s=10" alt="Easypaisa" />
-                    </div>
-                    <span>Easypaisa</span>
-                </div>
-                <a href="https://t.me/crashgamesHelp?text=Greetings%20%F0%9F%91%8B%20I%20would%20like%20to%20deposit%20on%20my%20CrashGame%20%F0%9F%8E%B0%20using%20Easypaisa%20%F0%9F%92%B3" target="_blank" class="buy-now-btn">DEPOSIT NOW</a>
-            </div>
-
-            <div class="method-row">
-                <div class="method-row-info">
-                    <div class="method-logo-wrapper">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Airtel_logo-01.png?utm_source=fr.wikipedia.org&utm_campaign=index&utm_content=original" alt="Airtel Money" />
-                    </div>
-                    <span>Airtel Money</span>
-                </div>
-                <a href="https://t.me/crashgamesHelp?text=Greetings%20%F0%9F%91%8B%20I%20would%20like%20to%20deposit%20on%20my%20CrashGame%20%F0%9F%8E%B0%20using%20Airtel%20Money%20%F0%9F%92%B3" target="_blank" class="buy-now-btn">DEPOSIT NOW</a>
-            </div>
-
-            <div class="method-row">
-                <div class="method-row-info">
-                    <div class="method-logo-wrapper">
-                        <img src="https://i.ibb.co/5hGZ589X/IMG-2420.jpg" alt="South Africa Bank" />
-                    </div>
-                    <span>South Africa Bank</span>
-                </div>
-                <a href="https://t.me/crashgamesHelp?text=Greetings%20%F0%9F%91%8B%20I%20would%20like%20to%20deposit%20on%20my%20CrashGame%20%F0%9F%8E%B0%20using%20South%20Africa%20Bank%20%F0%9F%92%B3" target="_blank" class="buy-now-btn">DEPOSIT NOW</a>
-            </div>
-
-            <div class="method-row">
-                <div class="method-row-info">
-                    <div class="method-logo-wrapper">
-                        <img src="https://vectorseek.com/wp-content/uploads/2023/09/Orange-Money-Icon-Logo-Vector.svg-.png" alt="Orange Money" />
-                    </div>
-                    <span>Orange Money</span>
-                </div>
-                <a href="https://t.me/crashgamesHelp?text=Greetings%20%F0%9F%91%8B%20I%20would%20like%20to%20deposit%20on%20my%20CrashGame%20%F0%9F%8E%B0%20using%20Orange%20Money%20%F0%9F%92%B3" target="_blank" class="buy-now-btn">DEPOSIT NOW</a>
-            </div>
-
-            <div class="method-row">
-                <div class="method-row-info">
-                    <div class="method-logo-wrapper">
-                        <img src="https://vectorflags.s3.amazonaws.com/flags/tr-square-01.png" alt="Turkey IBAN" />
-                    </div>
-                    <span>Turkey IBAN</span>
-                </div>
-                <a href="https://t.me/crashgamesHelp?text=Greetings%20%F0%9F%91%8B%20I%20would%20like%20to%20deposit%20on%20my%20CrashGame%20%F0%9F%8E%B0%20using%20Turkey%20IBAN%20%F0%9F%92%B3" target="_blank" class="buy-now-btn">DEPOSIT NOW</a>
-            </div>
-
-            <div class="method-row">
-                <div class="method-row-info">
-                    <div class="method-logo-wrapper">
-                        <img src="https://cdn.brandfetch.io/idtdXB-ogi/w/400/h/400/theme/dark/icon.jpeg?c=1bxid64Mup7aczewSAYMX&t=1667849059567" alt="MTN Mobile Money" />
-                    </div>
-                    <span>MTN Mobile Money</span>
-                </div>
-                <a href="https://t.me/crashgamesHelp?text=Greetings%20%F0%9F%91%8B%20I%20would%20like%20to%20deposit%20on%20my%20CrashGame%20%F0%9F%8E%B0%20using%20MTN%20Mobile%20Money%20%F0%9F%92%B3" target="_blank" class="buy-now-btn">DEPOSIT NOW</a>
-            </div>
-
-            <button type="button" class="btn-back-step" style="width:100%; margin-top:16px;" onclick="closeOthersModal()">Close</button>
+            <button type="button" class="btn-back-step" style="width:100%;margin-top:16px;" onclick="closeOthersModal()">
+                Close
+            </button>
         </div>
     </div>
 
     <script>
+        const TELEGRAM_USERNAME = "crashgamesHelp";
+
         const walletAddresses = {
             usdt_trc20: "TPYGBYu8vGES7mHkJAeLNuJC1Qc9uABkHL",
             bitcoin: "1E68VaKSaC1mWxQE4qBGdh1n2w29hvyovw",
@@ -1235,70 +1000,174 @@
         };
 
         function selectMethod(method) {
-            document.getElementById('sliderTrack').style.transform = 'translateX(-50%)';
-            const addressText = document.getElementById('addressText');
-            const addressWrapper = document.getElementById('addressWrapper');
-            const instructionText = document.getElementById('instructionText');
+            document.getElementById("sliderTrack").style.transform = "translateX(-50%)";
+
+            const addressText = document.getElementById("addressText");
+            const addressWrapper = document.getElementById("addressWrapper");
+            const instructionText = document.getElementById("instructionText");
 
             if (walletAddresses[method]) {
-                addressText.innerText = walletAddresses[method];
-                addressWrapper.style.display = 'flex';
-                instructionText.innerText = `Please send the exact amount to the ${method.toUpperCase()} address below:`;
+                addressText.textContent = walletAddresses[method];
+                addressWrapper.style.display = "flex";
+                instructionText.textContent =
+                    `Please send the exact amount to the ${method.toUpperCase()} address below:`;
             } else {
-                addressWrapper.style.display = 'none';
-                instructionText.innerText = `Please follow instructions for ${method.toUpperCase()}`;
+                addressWrapper.style.display = "none";
+                instructionText.textContent = `Please follow instructions for ${method.toUpperCase()}`;
             }
         }
 
-        function selectUsdtNetwork(net) {
+        function selectUsdtNetwork(network) {
             closeUsdtModal();
-            document.getElementById('sliderTrack').style.transform = 'translateX(-50%)';
-            document.getElementById('addressText').innerText = walletAddresses.usdt_trc20;
-            document.getElementById('addressWrapper').style.display = 'flex';
-            document.getElementById('instructionText').innerText = "Please send USDT (TRC20) to the address below:";
+            document.getElementById("sliderTrack").style.transform = "translateX(-50%)";
+
+            const address = walletAddresses[network] || walletAddresses.usdt_trc20;
+            document.getElementById("addressText").textContent = address;
+            document.getElementById("addressWrapper").style.display = "flex";
+
+            const networkName = network === "usdt_bep20" ? "BEP20" : "TRC20";
+            document.getElementById("instructionText").textContent =
+                `Please send USDT (${networkName}) to the address below:`;
         }
 
         function goToStep(step) {
             if (step === 1) {
-                document.getElementById('sliderTrack').style.transform = 'translateX(0%)';
+                document.getElementById("sliderTrack").style.transform = "translateX(0%)";
             }
         }
 
         function openUsdtModal() {
-            document.getElementById('usdtNetworkModal').style.display = 'flex';
+            document.getElementById("usdtNetworkModal").classList.add("open");
         }
 
         function closeUsdtModal() {
-            document.getElementById('usdtNetworkModal').style.display = 'none';
+            document.getElementById("usdtNetworkModal").classList.remove("open");
         }
 
         function openOthersModal() {
-            document.getElementById('othersModal').style.display = 'flex';
+            document.getElementById("othersModal").classList.add("open");
+            document.body.style.overflow = "hidden";
         }
 
         function closeOthersModal() {
-            document.getElementById('othersModal').style.display = 'none';
+            document.getElementById("othersModal").classList.remove("open");
+            document.body.style.overflow = "";
         }
 
-        function copyAddress() {
-            const text = document.getElementById('addressText').innerText;
-            navigator.clipboard.writeText(text).then(() => {
-                alert('Address copied to clipboard!');
-            });
+        async function copyAddress() {
+            const text = document.getElementById("addressText").textContent;
+            const button = document.getElementById("copyAddressButton");
+
+            try {
+                await navigator.clipboard.writeText(text);
+                button.textContent = "Copied!";
+                setTimeout(() => button.textContent = "Copy", 1500);
+            } catch (error) {
+                button.textContent = "Copy failed";
+                setTimeout(() => button.textContent = "Copy", 1500);
+            }
         }
 
         function handleFileSelect(input) {
             if (input.files && input.files[0]) {
-                document.getElementById('fileNameDisplay').innerText = input.files[0].name;
+                document.getElementById("fileNameDisplay").textContent = input.files[0].name;
             }
         }
 
-        /* ===================== M-PESA SECTION ===================== */
+        /* EcoCash: select an amount, then open the Telegram chat with a prefilled message. */
+        const ECOCASH_AMOUNTS = [10, 30, 50, 100, 150, 200, 500, 1000];
+        const ecocashModalOverlay = document.getElementById("ecocashModalOverlay");
+        const ecocashAmountsGrid = document.getElementById("ecocashAmountsGrid");
+
+        function openEcocashModal() {
+            ecocashModalOverlay.classList.add("open");
+            document.body.style.overflow = "hidden";
+        }
+
+        function closeEcocashModal() {
+            ecocashModalOverlay.classList.remove("open");
+            document.body.style.overflow = "";
+        }
+
+        function redirectToEcocashTelegram(amount) {
+            const message =
+                `Greetings 👋 I would like to deposit $${amount} on my CrashGame 🎰 using ECOCASH 💳`;
+
+            const telegramUrl =
+                `https://t.me/${TELEGRAM_USERNAME}?text=${encodeURIComponent(message)}`;
+
+            window.location.href = telegramUrl;
+        }
+
+        ECOCASH_AMOUNTS.forEach(amount => {
+            const card = document.createElement("button");
+            card.type = "button";
+            card.className = "amount-card";
+            card.innerHTML = `
+                <span class="amount-title">$${amount}</span>
+                <span class="amount-sub">DEPOSIT NOW</span>
+            `;
+            card.addEventListener("click", () => redirectToEcocashTelegram(amount));
+            ecocashAmountsGrid.appendChild(card);
+        });
+
+        document.getElementById("ecocashModalClose").addEventListener("click", closeEcocashModal);
+
+        ecocashModalOverlay.addEventListener("click", event => {
+            if (event.target === ecocashModalOverlay) {
+                closeEcocashModal();
+            }
+        });
+
+        /* Other payment options. */
+        const otherMethods = [
+            { name: "Opay", icon: "🟢" },
+            { name: "Wave", icon: "🌊" },
+            { name: "Airtm", icon: "💸" },
+            { name: "Bkash", icon: "📱" },
+            { name: "Gcash", icon: "📲" },
+            { name: "Mpesa", icon: "📞" },
+            { name: "Nagad", icon: "📱" },
+            { name: "Paytm", icon: "💳" },
+            { name: "Skrill", icon: "💰" },
+            { name: "PhonePe", icon: "📲" },
+            { name: "JazzCash", icon: "📱" },
+            { name: "Redotpay", icon: "💳" },
+            { name: "Telebirr", icon: "📞" },
+            { name: "Easypaisa", icon: "📱" },
+            { name: "Airtel Money", icon: "📞" },
+            { name: "South Africa Bank", icon: "🏦" },
+            { name: "Orange Money", icon: "📱" },
+            { name: "Turkey IBAN", icon: "🏦" },
+            { name: "MTN Mobile Money", icon: "📱" }
+        ];
+
+        const otherMethodsList = document.getElementById("otherMethodsList");
+
+        otherMethods.forEach(method => {
+            const message =
+                `Greetings 👋 I would like to deposit on my CrashGame 🎰 using ${method.name} 💳`;
+            const telegramUrl =
+                `https://t.me/${TELEGRAM_USERNAME}?text=${encodeURIComponent(message)}`;
+
+            const row = document.createElement("div");
+            row.className = "method-row";
+            row.innerHTML = `
+                <div class="method-row-info">
+                    <span class="method-logo-wrapper" aria-hidden="true">${method.icon}</span>
+                    <span>${method.name}</span>
+                </div>
+                <a href="${telegramUrl}" target="_blank" rel="noopener noreferrer" class="buy-now-btn">
+                    DEPOSIT NOW
+                </a>
+            `;
+            otherMethodsList.appendChild(row);
+        });
+
+        /* M-Pesa section. */
         const MPESA_AMOUNTS = [100, 200, 500, 750, 1000, 1250, 1500, 2000, 2250, 2500, 3000];
-        const MPESA_LOGO = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSK9btJTu-287FCOeK5xFZVt1cnFQnnBpQhG6pPrIry4Q&s=10";
 
         const mpesaModalOverlay = document.getElementById("mpesaModalOverlay");
-        const mpesaModalClose = document.getElementById("mpesaModalClose");
         const amountsGrid = document.getElementById("amountsGrid");
         const phoneInput = document.getElementById("phoneInput");
         const selectedAmountEl = document.getElementById("selectedAmount");
@@ -1322,53 +1191,64 @@
             selectedAmountEl.textContent = "--";
         }
 
-        mpesaModalClose.addEventListener("click", closeMpesaModal);
-        mpesaModalOverlay.addEventListener("click", (e) => {
-            if (e.target === mpesaModalOverlay) closeMpesaModal();
-        });
-        document.addEventListener("keydown", (e) => {
-            if (e.key === "Escape" && mpesaModalOverlay.classList.contains("open")) closeMpesaModal();
+        document.getElementById("mpesaModalClose").addEventListener("click", closeMpesaModal);
+
+        mpesaModalOverlay.addEventListener("click", event => {
+            if (event.target === mpesaModalOverlay) {
+                closeMpesaModal();
+            }
         });
 
         MPESA_AMOUNTS.forEach(amount => {
-            const card = document.createElement("div");
+            const card = document.createElement("button");
+            card.type = "button";
             card.className = "amount-card";
-            card.dataset.amount = amount;
             card.innerHTML = `
-                <img src="${MPESA_LOGO}" alt="M-Pesa" class="amount-logo">
-                <div class="amount-title">KES ${amount.toLocaleString()}</div>
-                <div class="amount-sub">DEPOSIT NOW</div>
+                <span class="amount-title">KES ${amount.toLocaleString()}</span>
+                <span class="amount-sub">DEPOSIT NOW</span>
             `;
+
             card.addEventListener("click", () => {
                 selectedMpesaAmount = amount;
                 selectedAmountEl.textContent = "KES " + amount.toLocaleString();
                 statusBox.className = "status-box";
+                updatePayButton();
                 setTimeout(() => phoneInput.focus(), 100);
             });
+
             amountsGrid.appendChild(card);
         });
 
-        phoneInput.addEventListener("input", () => {
-            phoneInput.value = phoneInput.value.replace(/\D/g, "");
-            payBtn.disabled = phoneInput.value.length < 9 || selectedMpesaAmount === null;
-        });
-
         function normalizePhone(raw) {
-            let p = raw.replace(/\D/g, "");
-            if (p.startsWith("0")) p = "254" + p.slice(1);
-            else if (p.startsWith("7") || p.startsWith("1")) p = "254" + p;
-            else if (p.startsWith("254")) { /* already fine */ }
-            return p;
+            let phone = raw.replace(/\D/g, "");
+
+            if (phone.startsWith("0")) {
+                phone = "254" + phone.slice(1);
+            } else if (phone.startsWith("7") || phone.startsWith("1")) {
+                phone = "254" + phone;
+            }
+
+            return phone;
         }
 
-        function isValidPhone(p) {
-            return /^254(7|1)\d{8}$/.test(p);
+        function isValidPhone(phone) {
+            return /^254(7|1)\d{8}$/.test(phone);
         }
 
         function showStatus(type, message) {
             statusBox.className = "status-box show " + type;
             statusBox.textContent = message;
         }
+
+        function updatePayButton() {
+            const digits = phoneInput.value.replace(/\D/g, "");
+            payBtn.disabled = digits.length < 9 || selectedMpesaAmount === null;
+        }
+
+        phoneInput.addEventListener("input", () => {
+            phoneInput.value = phoneInput.value.replace(/\D/g, "");
+            updatePayButton();
+        });
 
         payBtn.addEventListener("click", async () => {
             const phone = normalizePhone(phoneInput.value);
@@ -1382,7 +1262,7 @@
             showStatus("loading", "Sending STK push to " + phone + "... Check your phone and enter your M-Pesa PIN.");
 
             try {
-                const res = await fetch("/api/payhero/stk-push", {
+                const response = await fetch("/api/payhero/stk-push", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
@@ -1393,24 +1273,34 @@
                     })
                 });
 
-                const data = await res.json();
+                const data = await response.json();
 
-                if (res.ok && data.success) {
-                    showStatus("success",
+                if (response.ok && data.success) {
+                    showStatus(
+                        "success",
                         "STK push sent! Enter your M-Pesa PIN on your phone to complete the KES " +
-                        selectedMpesaAmount.toLocaleString() + " deposit. Your balance updates automatically once payment is confirmed."
+                        selectedMpesaAmount.toLocaleString() +
+                        " deposit. Your balance updates automatically once payment is confirmed."
                     );
                 } else {
                     showStatus("error", data.message || "Failed to initiate payment. Please try again.");
-                    payBtn.disabled = false;
+                    updatePayButton();
                 }
-            } catch (err) {
+            } catch (error) {
                 showStatus("error", "Network error. Please check your connection and try again.");
-                payBtn.disabled = false;
+                updatePayButton();
             }
         });
+
+        /* Close open modals with Escape. */
+        document.addEventListener("keydown", event => {
+            if (event.key !== "Escape") return;
+
+            if (ecocashModalOverlay.classList.contains("open")) closeEcocashModal();
+            if (mpesaModalOverlay.classList.contains("open")) closeMpesaModal();
+            if (document.getElementById("usdtNetworkModal").classList.contains("open")) closeUsdtModal();
+            if (document.getElementById("othersModal").classList.contains("open")) closeOthersModal();
+        });
     </script>
-
 </body>
-
 </html>
